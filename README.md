@@ -13,6 +13,10 @@
 
 ## Common Use Cases
 
+Parameters:
+- url: URL to douyin.com video page, i.g. https://www.douyin.com/discover?modal_id={model_id}. See also in references 1.
+- cookies_string: A workable cookie string (pass captcha).  See also in references 2.
+
 ### Programatically
 
 ```python3
@@ -119,6 +123,11 @@ Great thanks to all contributors.
 ## Contributing 
 
 Pull requests are welcome.
+
+## References
+
+1. Uniform Resource Locator (URL). https://en.wikipedia.org/wiki/URL
+2. HTTP cookies. https://en.wikipedia.org/wiki/HTTP_cookie
 
 ## License
 
