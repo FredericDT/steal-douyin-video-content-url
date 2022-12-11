@@ -3,9 +3,12 @@ import urllib
 import json
 import argparse
 import pprint
+import logging
 
 import requests
 import bs4
+
+__logging = logging.getLogger(__name__)
 
 
 def get_content(url, cookies_string):
@@ -15,17 +18,24 @@ def get_content(url, cookies_string):
 
 def extract_render_data(content):
     soup = bs4.BeautifulSoup(content, 'html.parser')
-    return soup.find(id='RENDER_DATA').contents[0]
+    soup_finding_render_data = soup.find(id='RENDER_DATA')
+    return soup_finding_render_data.contents[0]
 
 def video_bit_rate_list_from_render_data_object(render_data_object):
-    video_bit_rate_list = render_data_object['1']['videoDetail']['video']['bitRateList']
+    video_bit_rate_list = []
+    if render_data_object['1']['videoDetail']:
+        video_bit_rate_list = render_data_object['1']['videoDetail']['video']['bitRateList']
+    elif render_data_object['41']:
+        video_bit_rate_list = render_data_object['41']['aweme']['detail']['video']['bitRateList']
     return video_bit_rate_list
 
 def url_cookies_to_video_bit_rate_list(url, cookies_string):
     content = get_content(url, cookies_string=cookies_string)
+    __logging.debug('content: {}'.format(content))
     render_data = extract_render_data(content)
     render_data = urllib.parse.unquote(render_data)
     render_data_object = json.loads(render_data)
+    __logging.debug('render_data_object: {}'.format(render_data_object))
     video_bit_rate_list = video_bit_rate_list_from_render_data_object(render_data_object)
     return video_bit_rate_list
 
