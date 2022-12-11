@@ -43,7 +43,7 @@ def add_arguments(parser):
     parser.add_argument('--url', 
         required=True, 
         type=str, 
-        help='URL to douyin.com video page, i.g. https://www.douyin.com/discover?modal_id={model_id}',
+        help='URL to douyin.com video page, i.g. https://www.douyin.com/discover?modal_id={model_id} or https://www.douyin.com/video/{id}',
     )
     parser.add_argument('--cookies-string',
         required=True,

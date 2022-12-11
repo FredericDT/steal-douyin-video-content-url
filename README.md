@@ -4,7 +4,7 @@
 
 ### Goals
 
-- To steal a video content URL from douyin.com pages like `https://www.douyin.com/discover?modal_id={model_id}`, in which `{model_id}` is an unsigned long integer
+- To steal a video content URL from douyin.com pages like `https://www.douyin.com/discover?modal_id={model_id}` or `https://www.douyin.com/video/{id}`, in which `{model_id}` or `{id}` is an unsigned long integer
 
 ### Challenges
 
@@ -14,7 +14,7 @@
 ## Common Use Cases
 
 Parameters:
-- url: URL to douyin.com video page, i.g. https://www.douyin.com/discover?modal_id={model_id}. See also in references 1.
+- url: URL to douyin.com video page, i.g. https://www.douyin.com/discover?modal_id={model_id} or https://www.douyin.com/video/{id}. See also in references 1.
 - cookies_string: A workable cookie string (pass captcha).  See also in references 2.
 
 ### Programatically
