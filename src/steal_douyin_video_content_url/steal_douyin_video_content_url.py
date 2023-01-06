@@ -21,12 +21,32 @@ def extract_render_data(content):
     soup_finding_render_data = soup.find(id='RENDER_DATA')
     return soup_finding_render_data.contents[0]
 
+# TODO: Refactor with Strategy Pattern
+_render_data_rate_list_map = {
+    '1': {
+        'extract': lambda render_data_object: render_data_object['1']['videoDetail']['video']['bitRateList'],
+        'criteria': lambda render_data_object: render_data_object['1']['videoDetail'],
+    },
+    '41': {
+        'extract': lambda render_data_object: render_data_object['41']['aweme']['detail']['video']['bitRateList'],
+        'criteria': lambda render_data_object: render_data_object['41'],
+    },
+    '42': {
+        'extract': lambda render_data_object: render_data_object['42']['aweme']['detail']['video']['bitRateList'],
+        'criteria': lambda render_data_object: render_data_object['42'],
+    }
+}
+
 def video_bit_rate_list_from_render_data_object(render_data_object):
     video_bit_rate_list = []
-    if render_data_object['1']['videoDetail']:
-        video_bit_rate_list = render_data_object['1']['videoDetail']['video']['bitRateList']
-    elif render_data_object['41']:
-        video_bit_rate_list = render_data_object['41']['aweme']['detail']['video']['bitRateList']
+    for k, v in _render_data_rate_list_map.items():
+        try:
+            if v['criteria'](render_data_object):
+                video_bit_rate_list = v['extract'](render_data_object)
+        except TypeError as e:
+            __logging.debug('TypeError on render_data_object: {}'.format(render_data_object))
+        except KeyError as e:
+            __logging.debug('KeyError on render_data_object: {}'.format(render_data_object))
     return video_bit_rate_list
 
 def url_cookies_to_video_bit_rate_list(url, cookies_string):
