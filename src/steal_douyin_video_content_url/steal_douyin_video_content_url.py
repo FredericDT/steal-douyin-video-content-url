@@ -11,10 +11,12 @@ import bs4
 __logging = logging.getLogger(__name__)
 
 
-def get_content(url, cookies_string):
-    return requests.get(url=url, headers={
-        'Cookie': cookies_string
-    }).content
+def get_content(url, cookies_string, headers={}):
+    _headers = {}
+    _headers.update(headers)
+    _headers['Cookie'] = cookies_string
+
+    return requests.get(url=url, headers=_headers).content
 
 def extract_render_data(content):
     soup = bs4.BeautifulSoup(content, 'html.parser')
@@ -49,8 +51,8 @@ def video_bit_rate_list_from_render_data_object(render_data_object):
             __logging.debug('KeyError on render_data_object: {}'.format(render_data_object))
     return video_bit_rate_list
 
-def url_cookies_to_video_bit_rate_list(url, cookies_string):
-    content = get_content(url, cookies_string=cookies_string)
+def url_cookies_to_video_bit_rate_list(url, cookies_string, headers={}):
+    content = get_content(url, cookies_string=cookies_string, headers=headers)
     __logging.debug('content: {}'.format(content))
     render_data = extract_render_data(content)
     render_data = urllib.parse.unquote(render_data)

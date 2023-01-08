@@ -4,4 +4,4 @@ from .steal_douyin_video_content_url import extract_render_data
 from .steal_douyin_video_content_url import video_bit_rate_list_from_render_data_object
 from .steal_douyin_video_content_url import add_arguments
 
-__VERSION__ = '0.3'
+__VERSION__ = '0.4'
