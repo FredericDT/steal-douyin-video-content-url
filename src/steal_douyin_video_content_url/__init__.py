@@ -7,4 +7,4 @@ from .steal_douyin_video_content_url import add_arguments
 from .exception import RenderDataTagNotFoundException
 from .exception import RenderDataObjectStrategyNotDefinedException
 
-__VERSION__ = '0.6'
+__VERSION__ = '0.7'
